@@ -111,10 +111,8 @@ def detect_language(text):
         str: Язык.
     """
     no_space = text.replace(' ', '')
-    if not no_space:
-        return 'UNKNOWN'
-
     total_u = sum(ord(letter) for letter in no_space)
+    
     if total_u // len(no_space) > 500:
         return 'RU'
     return 'ENG'
