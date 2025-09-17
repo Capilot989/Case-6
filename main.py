@@ -92,8 +92,12 @@ def count_sentences(text):
     Returns:
         int: Количество предложений.
     """
-    count = text.count('.') + text.count('?') + text.count('!')
-    return count if count > 0 else 1
+    if not text or text.strip() == '':
+        return 0
+
+    sentences = re.split(r'[.!?]+', text)
+    sentences = [s.strip() for s in sentences if s.strip()]
+    return len(sentences)
 
 
 def detect_language(text):
