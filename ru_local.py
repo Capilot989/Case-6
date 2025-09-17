@@ -1,8 +1,8 @@
 TEXT = "Введите текст: "
 
-SENTIMENT = "Тональность"
+SENTIMENT = "Тональность:"
 POLARITY = "Полярность"
-OBJJECTIVITY = "Объективность"
+OBJJECTIVITY = "Объективность:"
 WORDS = "Количество слов"
 VOWELS = "Количество гласных"
 SENTENCES = "Количество предложений"
