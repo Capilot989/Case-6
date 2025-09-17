@@ -1,5 +1,7 @@
 from deep_translator import GoogleTranslator
 from textblob import TextBlob
+import re
+import ru_local as ru
 
 
 def translate_text(text, target_language='en'):
@@ -40,11 +42,11 @@ def analyze_sentiment(text):
     subjectivity = analysis.sentiment.subjectivity
 
     if polarity > 0.1:
-        sentiment = "позитивная"
+        sentiment = ru.POSITIVE
     elif polarity < -0.1:
-        sentiment = "негативная"
+        sentiment = ru.NEGATIVE
     else:
-        sentiment = "нейтральная"
+        sentiment = ru.NEUTRAL
 
     return {
         "sentiment": sentiment,
@@ -150,29 +152,29 @@ def reading_difficulty(text):
             str: Сложность чтения.
     """
     if fre_index(text) > 80:
-        return 'Текст очень легко читается (для младших школьников).'
+        return ru.SIMPLE
 
     elif fre_index(text) > 50:
-        return 'Простой текст (для школьников).'
+        return ru.MEDIUM
 
     elif fre_index(text) > 25:
-        return 'Текст немного трудно читать (для студентов).'
+        return ru.HARD
 
     elif fre_index(text) < 25:
-        return 'Текст трудно читается (для выпускников ВУЗов).'
+        return ru.IMPOSSIBLE
 
 
 if __name__ == "__main__":
-    text = input("Введите текст: ")
+    text = input(ru.TEXT)
 
     results = analyze_sentiment(text)
 
-    print(f"Тональность: {results['sentiment']}")
-    print(f"Полярность: {results['polarity']}")
-    print(f"Объективность: {results['objectivity_percent']}%")
-    print(f"Количество слов: {count_words(text)}")
-    print(f"Количество гласных: {count_vowels(text)}")
-    print(f"Количество предложений: {count_sentences(text)}")
-    print(f"Язык: {detect_language(text)}")
-    print(f"Индекс читаемости (FRE): {fre_index(text)}")
+    print(f"{ru.SENTIMENT} {results['sentiment']}")
+    print(f"{ru.POLARITY} {results['polarity']}")
+    print(f"{ru.OBJJECTIVITY}: {results['objectivity_percent']}%")
+    print(f"{ru.WORDS}: {count_words(text)}")
+    print(f"{ru.VOWELS}: {count_vowels(text)}")
+    print(f"{ru.SENTENCES} {count_sentences(text)}")
+    print(f"{ru.LANGUAGE}: {detect_language(text)}")
+    print(f"{ru.FRE_INDEX}: {fre_index(text)}")
     print(reading_difficulty(text))
